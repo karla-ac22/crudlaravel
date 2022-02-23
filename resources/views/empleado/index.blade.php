@@ -17,7 +17,10 @@
         @foreach($personas as $persona)
         <tr>
             <td>{{$persona->id}}</td>
-            <td>{{$persona->pic}}</td>
+            <td>
+                <img src="{{ asset('storage').'/'.$persona->pic }}" alt="">
+                {{$persona->pic}}
+            </td>
             <td>{{$persona->name}}</td>
             <td>{{$persona->lastname}}</td>
             <td>{{$persona->age}}</td>

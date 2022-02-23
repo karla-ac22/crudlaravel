@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Persona;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PersonaController extends Controller
 {
@@ -62,9 +63,11 @@ class PersonaController extends Controller
      * @param  \App\Models\Persona  $persona
      * @return \Illuminate\Http\Response
      */
-    public function edit(Persona $persona)
+    public function edit($id)
     {
         //
+        $persona=Persona::findOrFail($id);
+        return view('empleado.edit', compact('persona'));
     }
 
     /**
@@ -74,9 +77,18 @@ class PersonaController extends Controller
      * @param  \App\Models\Persona  $persona
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Persona $persona)
+    public function update(Request $request, $id)
     {
-        //
+        $datosEmpleado = request() -> except(['_token','_method']); 
+        if($request -> hasFile('pic')){
+            $persona=Persona::findOrFail($id);
+            Storage::delete('public/'.$persona->pic);
+            $datosEmpleado['pic']=$request->file('pic')->store('uploads','public');
+        }
+        Persona::where('id','=',$id)->update($datosEmpleado);
+        $persona=Persona::findOrFail($id);
+        return view('empleado.edit', compact('persona'));
+
     }
 
     /**
