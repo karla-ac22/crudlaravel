@@ -1,3 +1,6 @@
+@extends('layouts.app')
+@section('content')
+<div class="container">
 <h1>Listado de empleados</h1>
 <table class="table table-light">
     <thead class="thead-light">
@@ -42,3 +45,5 @@
         @endforeach
     </tbody>
 </table>
+</div>
+@endsection
